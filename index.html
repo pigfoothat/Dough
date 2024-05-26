@@ -98,9 +98,9 @@
             const tipo00FlourWeight = totalFlourWeight * 47.5 / 100;
 
             const results = `
-                <h2>Pizza Dough Recipe</h2>
+                <h1>Pizza Dough Recipe</h1>
                 <p>When completed, the total weight of your dough will be approximately ${totalDoughWeight.toFixed(0)} grams, allowing you to make ${numPizzas.toFixed(0)} dough ball(s), each weighing around ${doughWeightPerPizza.toFixed(0)} grams.</p>
-                <h3>Ingredients:</h3>
+                <h3>Dough Ingredients:</h3>
                 <p>Flour (g): ${totalFlourWeight.toFixed(0)}</p>
                 <p>Water (g): ${totalWaterWeight.toFixed(0)}</p>
                 <p>Yeast (g): ${yeastWeight.toFixed(2)}</p>
@@ -113,11 +113,16 @@
                 <p>Water (g): ${poolishWaterWeight.toFixed(0)}</p>
                 <p>Yeast (g): ${yeastWeight.toFixed(2)}</p>
                 <p>Sugar (g): ${sugarWeight.toFixed(2)}</p>
-                <h3>Instructions:</h3>
-                <p>Mix the preferment ingredients thoroughly.</p>
-                <p>Seal the bowl with cling film, making a couple of small air holes, and cover with a towel.</p>
-                <p>Leave the bowl at room temperature for 2 to 3 hours.</p>
-                <p>Note: The flour and water used in the preferment should be subtracted from the total amounts listed above. Do not add salt at this stage, as it can inhibit the yeast activity.</p>
+                <h2>Instructions:</h2>
+                <ul>
+                <li>Prepare the Preferment:
+                <ul>
+                <li>In a large mixing bowl, combine ${poolishWaterWeight.toFixed(0)}g of water, ${poolishFlourWeight.toFixed(0)}g of flour, ${yeastWeight.toFixed(2)}g of instant yeast and ${sugarWeight.toFixed(2)}g of sugar.</li>
+                <li>Mix thoroughly until there are no dry flour lumps. The consistency should be that of a thick batter.</li>
+                <li>Cover the bowl in plastic wrap with some air holes and a cloth.</li>
+                <li>Let it ferment at room temperature for 2 hours, then...</li> 
+                <li>Place it in the fridge for a further 10-14 hours, or until it is bubbly and has doubled in size.</li>
+                
             `;
 
             document.getElementById('results').innerHTML = results;
