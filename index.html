@@ -99,14 +99,18 @@
 
             const results = `
                 <h1>Pizza Dough Recipe</h1>
+               
+    
                 <p>When completed, the total weight of your dough will be approximately ${totalDoughWeight.toFixed(0)} grams, allowing you to make ${numPizzas.toFixed(0)} dough ball(s), each weighing around ${doughWeightPerPizza.toFixed(0)} grams.</p>
+                <h3>Time:</h3>
+                <p> This recipe take between 20 to 24 hours to complete. However, most of that time is spent just waiting for the dough to prove. you will only be busy for about 1.5 hours</P>
                 <h3>Dough Ingredients:</h3>
-                <p>Flour (g): ${totalFlourWeight.toFixed(0)}</p>
-                <p>Water (g): ${totalWaterWeight.toFixed(0)}</p>
-                <p>Yeast (g): ${yeastWeight.toFixed(2)}</p>
-                <p>Sugar (g): ${sugarWeight.toFixed(2)}</p>
-                <p>Salt (g): ${saltWeight.toFixed(2)}</p>
-                <p>Oil (g): ${oilWeight.toFixed(2)}</p>
+                <li>Flour:     ${totalFlourWeight.toFixed(0)}g</li>
+                <li>Water:     ${totalWaterWeight.toFixed(0)}g</li>
+                <li>Yeast:     ${yeastWeight.toFixed(2)}g</li>
+                <li>Sugar:     ${sugarWeight.toFixed(2)}g</li>
+                <li>Salt:      ${saltWeight.toFixed(2)}g</li>
+                <li>Oil:       ${oilWeight.toFixed(2)}g</li>
                 <h3>Preferment Preparation:</h3>
                 <p>To aid the proving stage, it is common to make a preferment 12 to 16 hours before mixing the main dough ingredients. Use equal parts of water and flour, and include all the yeast and sugar from the above list. Based on your input, use the following measurements:</p>
                 <p>Flour (g): ${poolishFlourWeight.toFixed(0)}</p>
