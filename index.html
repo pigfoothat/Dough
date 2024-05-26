@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizza Dough Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .results {
+            margin-top: 20px;
+        }
+        .indented {
+            text-indent: 40px; /* Adjust the value as needed */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Pizza Dough Calculator</h1>
+        <label for="numPizzas">Number of Pizzas:</label>
+        <input type="number" id="numPizzas" min="1" value="1">
+        
+        <label for="doughWeightPerPizza">Dough Weight per Pizza (g):</label>
+        <input type="number" id="doughWeightPerPizza" min="1" value="230">
+        
+        <label for="hydration">Hydration Percentage (%):</label>
+        <input type="number" id="hydration" min="1" max="100" value="70">
+        
+        <label for="poolish">Poolish Percentage (%):</label>
+        <input type="number" id="poolish" min="1" max="100" value="30">
+        
+        <button onclick="calculateRecipe()">Calculate</button>
+        
+        <div class="results" id="results"></div>
+    </div>
+
+    <script>
+        function calculateRecipe() {
+            const numPizzas = parseInt(document.getElementById('numPizzas').value);
+            const doughWeightPerPizza = parseInt(document.getElementById('doughWeightPerPizza').value);
+            const hydrationPercent = parseInt(document.getElementById('hydration').value);
+            const poolishPercent = parseInt(document.getElementById('poolish').value);
+
+            const totalDoughWeight = numPizzas * doughWeightPerPizza;
+            const hydrationRatio = hydrationPercent / 100;
+            const poolishRatio = poolishPercent / 100;
+
+            const poolishWeight = totalDoughWeight * poolishRatio;
+            const poolishFlourWeight = poolishWeight / 2;
+            const poolishWaterWeight = poolishWeight / 2;
+
+            const sugarPercent = .5 / 100;
+            const yeastPercent = .5 / 100;
+            const sugarWeight = totalDoughWeight * sugarPercent;
+            const yeastWeight = totalDoughWeight * yeastPercent;
+
+            const remainingFlourWeight = (totalDoughWeight - poolishWeight) / (1 + hydrationRatio);
+            const remainingWaterWeight = remainingFlourWeight * hydrationRatio;
+
+            const saltPercent = 2.5 / 100;
+            const oilPercent = 3 / 100;
+            const saltWeight = remainingFlourWeight * saltPercent;
+            const oilWeight = remainingFlourWeight * oilPercent;
+
+            const totalFlourWeight = remainingFlourWeight;
+            const totalWaterWeight = remainingWaterWeight;
+
+            const machinaFlourWeight = totalFlourWeight * 2.5 / 100;
+            const buratoFlourWeight = totalFlourWeight * 50 / 100;
+            const tipo00FlourWeight = totalFlourWeight * 47.5 / 100;
+
+            const results = `
+                <h2>Pizza Dough Recipe</h2>
+                <p>Total Flour (g): ${Math.round(totalFlourWeight)}</p>
+                <p class="indented">Machina Flour (g): ${Math.round(machinaFlourWeight)}</p>
+                <p class="indented">Burato Flour (g): ${Math.round(buratoFlourWeight)}</p>
+                <p class="indented">Tipo 00 Flour (g): ${Math.round(tipo00FlourWeight)}</p>
+                <p>Total Water (g): ${Math.round(totalWaterWeight)}</p>
+                <p>Salt (g): ${Math.round(saltWeight)}</p>
+                <p>Yeast (g): ${Math.round(yeastWeight)}</p>
+                <p>Sugar (g): ${Math.round(sugarWeight)}</p>
+                <p>Oil (g): ${Math.round(oilWeight)}</p>
+                <h2>Poolish Split</h2>
+                (Subtracted for the total flour & water weight)
+                <p>Poolish Flour (g): ${Math.round(poolishFlourWeight)} (use the Burato flour)</p>
+                <p>Poolish Water (g): ${Math.round(poolishWaterWeight)}</p>
+
+                <h2>${totalDoughWeight}g</h2>
+
+            `;
+
+            document.getElementById('results').innerHTML = results;
+        }
+    </script>
+</body>
+</html>
