@@ -40,25 +40,22 @@
         .results {
             margin-top: 20px;
         }
-        .indented {
-            text-indent: 40px; /* Adjust the value as needed */
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Pizza Dough Calculator</h1>
         <label for="numPizzas">Number of Pizzas:</label>
-        <input type="number" id="numPizzas" min="1" value="1">
+        <input type="number" id="numPizzas" min="1" value="1" step="1">
         
         <label for="doughWeightPerPizza">Dough Weight per Pizza (g):</label>
-        <input type="number" id="doughWeightPerPizza" min="1" value="230">
+        <input type="number" id="doughWeightPerPizza" min="1" value="230" step="5">
         
         <label for="hydration">Hydration Percentage (%):</label>
-        <input type="number" id="hydration" min="1" max="100" value="70">
+        <input type="number" id="hydration" min="40" max="100" value="70" step="10">
         
-        <label for="poolish">Poolish Percentage (%):</label>
-        <input type="number" id="poolish" min="1" max="100" value="30">
+        <label for="poolish">Preferment Percentage (%):</label>
+        <input type="number" id="poolish" min="1" max="100" value="30" step="0.01">
         
         <button onclick="calculateRecipe()">Calculate</button>
         
@@ -67,10 +64,10 @@
 
     <script>
         function calculateRecipe() {
-            const numPizzas = parseInt(document.getElementById('numPizzas').value);
-            const doughWeightPerPizza = parseInt(document.getElementById('doughWeightPerPizza').value);
-            const hydrationPercent = parseInt(document.getElementById('hydration').value);
-            const poolishPercent = parseInt(document.getElementById('poolish').value);
+            const numPizzas = parseFloat(document.getElementById('numPizzas').value);
+            const doughWeightPerPizza = parseFloat(document.getElementById('doughWeightPerPizza').value);
+            const hydrationPercent = parseFloat(document.getElementById('hydration').value);
+            const poolishPercent = parseFloat(document.getElementById('poolish').value);
 
             const totalDoughWeight = numPizzas * doughWeightPerPizza;
             const hydrationRatio = hydrationPercent / 100;
@@ -80,21 +77,21 @@
             const poolishFlourWeight = poolishWeight / 2;
             const poolishWaterWeight = poolishWeight / 2;
 
-            const sugarPercent = .5 / 100;
-            const yeastPercent = .5 / 100;
-            const sugarWeight = totalDoughWeight * sugarPercent;
-            const yeastWeight = totalDoughWeight * yeastPercent;
+            const sugarPercent = 1 / 100;
+            const yeastPercent = 1 / 100;
+            const sugarWeight = poolishFlourWeight * sugarPercent;
+            const yeastWeight = poolishFlourWeight * yeastPercent;
 
             const remainingFlourWeight = (totalDoughWeight - poolishWeight) / (1 + hydrationRatio);
             const remainingWaterWeight = remainingFlourWeight * hydrationRatio;
 
-            const saltPercent = 2.5 / 100;
-            const oilPercent = 3 / 100;
+            const saltPercent = 3 / 100;
+            const oilPercent = 1 / 100;
             const saltWeight = remainingFlourWeight * saltPercent;
             const oilWeight = remainingFlourWeight * oilPercent;
 
-            const totalFlourWeight = remainingFlourWeight;
-            const totalWaterWeight = remainingWaterWeight;
+            const totalFlourWeight = poolishFlourWeight + remainingFlourWeight;
+            const totalWaterWeight = poolishWaterWeight + remainingWaterWeight;
 
             const machinaFlourWeight = totalFlourWeight * 2.5 / 100;
             const buratoFlourWeight = totalFlourWeight * 50 / 100;
@@ -102,22 +99,25 @@
 
             const results = `
                 <h2>Pizza Dough Recipe</h2>
-                <p>Total Flour (g): ${Math.round(totalFlourWeight)}</p>
-                <p class="indented">Machina Flour (g): ${Math.round(machinaFlourWeight)}</p>
-                <p class="indented">Burato Flour (g): ${Math.round(buratoFlourWeight)}</p>
-                <p class="indented">Tipo 00 Flour (g): ${Math.round(tipo00FlourWeight)}</p>
-                <p>Total Water (g): ${Math.round(totalWaterWeight)}</p>
-                <p>Salt (g): ${Math.round(saltWeight)}</p>
-                <p>Yeast (g): ${Math.round(yeastWeight)}</p>
-                <p>Sugar (g): ${Math.round(sugarWeight)}</p>
-                <p>Oil (g): ${Math.round(oilWeight)}</p>
-                <h2>Poolish Split</h2>
-                (Subtracted for the total flour & water weight)
-                <p>Poolish Flour (g): ${Math.round(poolishFlourWeight)} (use the Burato flour)</p>
-                <p>Poolish Water (g): ${Math.round(poolishWaterWeight)}</p>
-
-                <h2>${totalDoughWeight}g</h2>
-
+                <p>When completed, the total weight of your dough will be approximately ${totalDoughWeight.toFixed(0)} grams, allowing you to make ${numPizzas.toFixed(0)} dough ball(s), each weighing around ${doughWeightPerPizza.toFixed(0)} grams.</p>
+                <h3>Ingredients:</h3>
+                <p>Flour (g): ${totalFlourWeight.toFixed(0)}</p>
+                <p>Water (g): ${totalWaterWeight.toFixed(0)}</p>
+                <p>Yeast (g): ${yeastWeight.toFixed(2)}</p>
+                <p>Sugar (g): ${sugarWeight.toFixed(2)}</p>
+                <p>Salt (g): ${saltWeight.toFixed(2)}</p>
+                <p>Oil (g): ${oilWeight.toFixed(2)}</p>
+                <h3>Preferment Preparation:</h3>
+                <p>To aid the proving stage, it is common to make a preferment 12 to 16 hours before mixing the main dough ingredients. Use equal parts of water and flour, and include all the yeast and sugar from the above list. Based on your input, use the following measurements:</p>
+                <p>Flour (g): ${poolishFlourWeight.toFixed(0)}</p>
+                <p>Water (g): ${poolishWaterWeight.toFixed(0)}</p>
+                <p>Yeast (g): ${yeastWeight.toFixed(2)}</p>
+                <p>Sugar (g): ${sugarWeight.toFixed(2)}</p>
+                <h3>Instructions:</h3>
+                <p>Mix the preferment ingredients thoroughly.</p>
+                <p>Seal the bowl with cling film, making a couple of small air holes, and cover with a towel.</p>
+                <p>Leave the bowl at room temperature for 2 to 3 hours.</p>
+                <p>Note: The flour and water used in the preferment should be subtracted from the total amounts listed above. Do not add salt at this stage, as it can inhibit the yeast activity.</p>
             `;
 
             document.getElementById('results').innerHTML = results;
