@@ -46,7 +46,7 @@
     <div class="container">
         <h1>Pizza Dough Calculator</h1>
         <label for="numPizzas">Number of Pizzas:</label>
-        <input type="number" id="numPizzas" min="1" value="1" step="1">
+        <input type="number" id="numPizzas" min="1" value="4" step="1">
         
         <label for="doughWeightPerPizza">Dough Weight per Pizza (g):</label>
         <input type="number" id="doughWeightPerPizza" min="1" value="230" step="5">
@@ -126,8 +126,9 @@
                 <li>Cover the bowl in plastic wrap with some air holes and a cloth.</li>
                 <li>Let it ferment at room temperature for 2 hours, then...</li> 
                 <li>Place it in the fridge for a further 10-14 hours, or until it is bubbly and has doubled in size.</li>
-                
+                <li>${remainingflourweight.toFixed(0)}g</li>
             `;
+          
 
             document.getElementById('results').innerHTML = results;
         }
